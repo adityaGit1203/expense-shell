@@ -58,6 +58,7 @@ VALIDATE $? "downloading backend code"
 
 
 cd /app
+rm-rf /app/* &>>$LOG_FILE_NAME
 
 unzip /tmp/backend.zip &>>$LOG_FILE_NAME
 VALIDATE $? "unzipping backend code"
@@ -74,12 +75,12 @@ VALIDATE $? "installing mysql client"
 mysql -h mysql.devopsadipractice.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE_NAME
 VALIDATE $? "creating backend database and tables"
 
-systemctl deamon-reload &>>$LOG_FILE_NAME
+systemctl daemon-reload &>>$LOG_FILE_NAME
 VALIDATE $? "reloading systemd daemon"
 
 systemctl enable backend &>>$LOG_FILE_NAME
 VALIDATE $? "enabling backend service"
 
-systemctl start backend &>>$LOG_FILE_NAME
-VALIDATE $? "starting backend service"
+systemctl restart backend &>>$LOG_FILE_NAME
+VALIDATE $? "restarting backend service"
 
