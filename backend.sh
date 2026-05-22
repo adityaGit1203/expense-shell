@@ -47,8 +47,9 @@ VALIDATE $? "creating expenseapp user"
 mkdir /app &>>$LOG_FILE_NAME
 validate $? "creating /app directory"
 
-curl -o curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME
 VALIDATE $? "downloading backend code"
+
 
 cd /app
 
