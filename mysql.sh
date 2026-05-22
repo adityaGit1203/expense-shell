@@ -6,7 +6,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 LOGS_FOLDER="/var/log/expenseshell-logs"
-LOG_FILE=$(echo$0 | cut -d "." -f1 )
+LOG_FILE=$(echo $0 | cut -d "." -f1 )
 LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$(date +%Y-%m-%d-%H-%M-%S).log"
 
 VALIDATE(){
@@ -41,8 +41,17 @@ VALIDATE $? "enabling mysql-server"
 systemctl start mysqld &>>$LOG_FILE_NAME
 VALIDATE $? "starting mysql-server"
 
-mysql_secure_installation --set-root-password ExpenseApp@1 &>>$LOG_FILE_NAME
-VALIDATE $? "setting mysql root password"
+mysql -h mysql.devopsadipractice.online -u root -pExpenseApp@1 -e 'show databases;'
+
+if [ $? -ne 0 ]; then
+    echo "mysql root password not setup" &>>$LOG_FILE_NAME
+    mysql_secure_installation --set-root-password ExpenseApp@1 &>>$LOG_FILE_NAME
+    VALIDATE $? "setting mysql root password"
+else
+    echo -e "MySQL root password is already setup....$y Skipping $N"
+fi
+
+
 
 
 
