@@ -28,9 +28,11 @@ CHECK_ROOOT(){
     fi
 }
 
+mkdir -p $LOGS_FOLDER &>>$LOG_FILE_NAME
+VALIDATE $? "creating logs folder"
 echo "script execution started" &>>$LOG_FILE_NAME
 
-CHECK_ROOOT
+CHECK_ROOT
 
 dnf install nginx -y &>>$LOG_FILE_NAME
 VALIDATE $? "installing nginx"
