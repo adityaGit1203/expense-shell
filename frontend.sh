@@ -19,8 +19,7 @@ VALIDATE(){
     fi
 }
 
-CHECK_ROOOT(){
-
+CHECK_ROOT(){
     if [ $USERID -ne 0 ] 
     then
         echo "error: This script must be run as root."
