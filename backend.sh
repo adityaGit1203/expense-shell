@@ -45,7 +45,7 @@ useradd expenseapp &>>$LOG_FILE_NAME
 VALIDATE $? "creating expenseapp user"
 
 mkdir /app &>>$LOG_FILE_NAME
-validate $? "creating /app directory"
+VALIDATE $? "creating /app directory"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME
 VALIDATE $? "downloading backend code"
@@ -60,6 +60,7 @@ npm install &>>$LOG_FILE_NAME
 VALIDATE $? "installing backend dependencies"
 
 cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOG_FILE_NAME
+VALIDATE $? "copying backend systemd service file"
 
 dnf install mysql -y &>>$LOG_FILE_NAME
 VALIDATE $? "installing mysql client"
@@ -71,7 +72,7 @@ systemctl deamon-reload &>>$LOG_FILE_NAME
 VALIDATE $? "reloading systemd daemon"
 
 systemctl enable backend &>>$LOG_FILE_NAME
-validate $? "enabling backend service"
+VALIDATE $? "enabling backend service"
 
 systemctl start backend &>>$LOG_FILE_NAME
 VALIDATE $? "starting backend service"
